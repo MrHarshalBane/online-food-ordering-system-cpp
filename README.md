@@ -2,7 +2,10 @@
 
 ## 📌 Project Overview
 
-The Online Food Ordering System is a console-based application developed in C++. It allows users to browse a food menu, place orders, calculate bills, and generate order summaries. The project demonstrates the use of object-oriented programming concepts, file handling, and basic data structures in C++.
+The Online Food Ordering System is an application developed using C++ Object-Oriented Programming (OOP) concepts. It allows users to browse a food menu, place orders, calculate bills, and generate order summaries.
+
+🌐 **Live Interactive Web & C++ Terminal Experience**: [https://mrharshalbane.github.io/online-food-ordering-system-cpp/](https://mrharshalbane.github.io/online-food-ordering-system-cpp/)
+
 
 ---
 
