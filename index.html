@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Food Ordering System (C++) — Interactive Web & Terminal Experience</title>
+  <meta name="description" content="Interactive food ordering system built from C++ OOP concepts. Browse the delicious menu, customize your cart, generate real-time receipts, or run the live C++ terminal emulator.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand-group">
+        <div class="brand-badge">🍔</div>
+        <div>
+          <h1 class="brand-title">FoodFlow <span class="tag-cpp">C++ Edition</span></h1>
+          <p class="brand-subtitle">Online Food Ordering System & Terminal Simulator</p>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <!-- Mode Tabs -->
+        <div class="mode-tabs" role="tablist">
+          <button id="tab-menu" class="mode-tab active" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+            Food Menu & Cart
+          </button>
+          <button id="tab-terminal" class="mode-tab" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+            C++ Terminal (order.cpp)
+          </button>
+        </div>
+
+        <a href="https://github.com/MrHarshalBane/online-food-ordering-system-cpp" target="_blank" rel="noopener noreferrer" class="github-btn" title="View Source on GitHub">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewports -->
+  <main class="main-content">
+    <div class="content-wrapper">
+
+      <!-- LEFT SECTION: Food Menu & Cart (Modern View) -->
+      <section id="menu-view" class="view-panel active-view">
+        <div class="menu-cart-grid">
+          
+          <!-- Menu Items List -->
+          <div class="menu-container">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">Fresh & Hot Menu</h2>
+                <p class="section-desc">Instantiated from <code>Menu</code> class vector</p>
+              </div>
+              <span class="badge-item-count" id="menu-count-badge">5 Items Available</span>
+            </div>
+
+            <div class="menu-grid" id="menu-cards-container">
+              <!-- Dynamically populated via JS from C++ menu items -->
+            </div>
+          </div>
+
+          <!-- Checkout & Order Summary Cart -->
+          <div class="cart-container glassmorphism">
+            <div class="cart-header">
+              <div class="cart-title-group">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <h3>Your Tray (Order Class)</h3>
+              </div>
+              <button id="clear-cart-btn" class="clear-btn">Clear All</button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div class="cart-items-wrapper" id="cart-items-list">
+              <div class="cart-empty-state">
+                <span class="empty-icon">🍽️</span>
+                <p>Your order is empty</p>
+                <small>Select delicious items from the menu to start your order</small>
+              </div>
+            </div>
+
+            <!-- Customer Details Form -->
+            <form id="customer-form" class="customer-info-box">
+              <div class="form-title">Customer Delivery Details (Customer Class)</div>
+              <div class="input-field">
+                <label for="cust-name">Full Name</label>
+                <input type="text" id="cust-name" placeholder="e.g. Harshal Bane" required>
+              </div>
+              <div class="input-field">
+                <label for="cust-phone">Phone Number</label>
+                <input type="tel" id="cust-phone" placeholder="e.g. +91 98765 43210" required>
+              </div>
+              <div class="input-field">
+                <label for="cust-address">Delivery Address</label>
+                <textarea id="cust-address" rows="2" placeholder="e.g. Flat 402, Sunshine Towers, Mumbai" required></textarea>
+              </div>
+            </form>
+
+            <!-- Bill Computation Breakdown -->
+            <div class="bill-breakdown">
+              <div class="bill-row">
+                <span>Items Subtotal</span>
+                <span id="bill-subtotal">Rs. 0.00</span>
+              </div>
+              <div class="bill-row">
+                <span>Restaurant GST (5%)</span>
+                <span id="bill-tax">Rs. 0.00</span>
+              </div>
+              <div class="bill-row">
+                <span>Delivery Partner Fee</span>
+                <span id="bill-delivery">Rs. 0.00</span>
+              </div>
+              <div class="bill-divider"></div>
+              <div class="bill-row total-row">
+                <span>Total Amount:</span>
+                <span id="bill-total" class="total-highlight">Rs. 0.00</span>
+              </div>
+            </div>
+
+            <!-- Place Order Button -->
+            <button id="place-order-btn" class="order-submit-btn" disabled>
+              <span class="btn-text">Confirm & Place Order</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TERMINAL SIMULATOR VIEW (C++ Console Emulator) -->
+      <section id="terminal-view" class="view-panel">
+        <div class="term-layout-grid">
+          
+          <!-- Terminal Window -->
+          <div class="terminal-box glassmorphism">
+            <div class="term-header">
+              <div class="term-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <div class="term-title">
+                <span>g++ order.cpp -o food && ./food</span>
+              </div>
+              <button id="term-reset-btn" class="term-reset-btn">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                </svg>
+                Restart Session
+              </button>
+            </div>
+
+            <!-- Terminal Screen Body -->
+            <div class="term-console" id="term-console">
+              <div class="term-row banner-row">
+                <span class="t-cyan">GNU C++20 Compiler (GCC 14.2) • Process started</span>
+              </div>
+              <div class="term-row divider-row">========================================================</div>
+              <div id="term-history-log"></div>
+              
+              <!-- Input Prompt -->
+              <div class="term-input-line" id="term-active-line">
+                <span class="term-prompt" id="term-prompt-label">Enter item number to order: </span>
+                <div class="term-input-wrap">
+                  <input type="text" id="term-input" autocomplete="off" spellcheck="false">
+                  <span class="term-cursor"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="term-footer">
+              <span>Type your response and press <kbd>Enter</kbd> • Type <kbd>restart</kbd> to reload.</span>
+            </div>
+          </div>
+
+          <!-- Live OOP Memory & Vector Inspector -->
+          <div class="oop-inspector glassmorphism">
+            <div class="oop-header">
+              <span class="oop-badge">OOP</span>
+              <h3>Live C++ Object State (Memory View)</h3>
+            </div>
+            
+            <!-- Class Order State -->
+            <div class="oop-section">
+              <div class="oop-title">class Order</div>
+              <div class="vector-box">
+                <div class="vector-label">vector&lt;FoodItem&gt; orderedItems (<span id="oop-vector-count">0</span> elements)</div>
+                <div class="vector-elements" id="oop-vector-items">
+                  <span class="empty-vector">[ empty vector ]</span>
+                </div>
+              </div>
+              <div class="var-row">
+                <span class="var-name">order.getTotal():</span>
+                <span class="var-val" id="oop-order-total">Rs. 0.00</span>
+              </div>
+            </div>
+
+            <!-- Class Customer State -->
+            <div class="oop-section">
+              <div class="oop-title">class Customer</div>
+              <div class="var-row">
+                <span class="var-name">customer.name:</span>
+                <span class="var-val" id="oop-cust-name">""</span>
+              </div>
+              <div class="var-row">
+                <span class="var-name">customer.phone:</span>
+                <span class="var-val" id="oop-cust-phone">""</span>
+              </div>
+              <div class="var-row">
+                <span class="var-name">customer.address:</span>
+                <span class="var-val" id="oop-cust-addr">""</span>
+              </div>
+            </div>
+
+            <!-- C++ Code Quick View -->
+            <div class="code-peek">
+              <div class="code-peek-header">
+                <span>order.cpp (OOP Classes snippet)</span>
+              </div>
+              <pre><code>class FoodItem {
+public:
+    string name;
+    double price;
+    FoodItem(string n, double p) { name = n; price = p; }
+};
+
+class Order {
+public:
+    vector&lt;FoodItem&gt; orderedItems;
+    void addOrder(const FoodItem& item) { orderedItems.push_back(item); }
+    double getTotal() { /* calculates total sum */ }
+};</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Order Receipt Success Modal -->
+  <div class="modal-backdrop" id="receipt-modal">
+    <div class="receipt-card">
+      <div class="receipt-header">
+        <div class="success-badge">✓</div>
+        <h2>Order Confirmed!</h2>
+        <p>Order receipt generated matching <code>order.showOrder()</code></p>
+      </div>
+
+      <div class="receipt-body">
+        <div class="receipt-dashed"></div>
+        <div class="receipt-row-header">
+          <span>Item</span>
+          <span>Qty</span>
+          <span>Price</span>
+        </div>
+        <div class="receipt-items-container" id="receipt-items-container">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="receipt-dashed"></div>
+        <div class="receipt-summary-line">
+          <span>Total Paid:</span>
+          <strong id="receipt-total-val">Rs. 0.00</strong>
+        </div>
+        <div class="receipt-customer-details" id="receipt-customer-details">
+          <!-- Customer info -->
+        </div>
+      </div>
+
+      <div class="receipt-footer">
+        <button id="close-modal-btn" class="modal-close-btn">Close & New Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-wrap">
+      <p>
+        <strong>Online Food Ordering System</strong> • Source code in C++ by <a href="https://github.com/MrHarshalBane" target="_blank" rel="noopener noreferrer">@MrHarshalBane</a>
+      </p>
+      <p class="footer-sub">
+        Educational C++ OOP demonstration with clean Vanilla HTML5/CSS3/JS Web Architecture
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
